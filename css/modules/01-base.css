@@ -1,0 +1,50 @@
+:root {
+  --ink: #14171f;
+  --ink-soft: #3a3e4a;
+  --cream: #f7f5f0;
+  --card: #ffffff;
+  --line: #e5e2d9;
+  --gold: #c8862b;
+  --gold-soft: #f3e2c4;
+  --red: #c13b33;
+  --red-soft: #f6dad7;
+  --green: #3e7a4c;
+  --green-soft: #dcebdf;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family:
+    "Kanit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #dedad0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 12px;
+  color: var(--ink);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible,
+.card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.detail-title,
+.win-title {
+  text-wrap: balance;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card:active {
+    transition: none;
+    transform: none;
+  }
+}

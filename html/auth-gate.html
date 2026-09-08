@@ -1,0 +1,66 @@
+  <div class="namegate" id="nameGate">
+    <div id="loginStep">
+      <svg width="46" height="46" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#1F232E" />
+        <g transform="translate(32,33) rotate(-40)">
+          <rect x="-4" y="-22" width="8" height="16" rx="2" fill="#C8862B" />
+          <rect x="-15" y="-8" width="30" height="9" rx="3" fill="#C8862B" />
+          <rect x="-3" y="3" width="6" height="16" rx="2" fill="#C13B33" />
+        </g>
+      </svg>
+      <p style="font-size: 18px; font-weight: 700; margin: 14px 0 12px">
+        Pramoon Live
+      </p>
+      <div class="auth-tabs">
+        <div
+          class="auth-tab active"
+          id="authTabLogin"
+          onclick="setAuthMode('login')"
+        >
+          เข้าสู่ระบบ
+        </div>
+        <div class="auth-tab" id="authTabSignup" onclick="setAuthMode('signup')">
+          สมัครสมาชิก
+        </div>
+      </div>
+      <p
+        id="authModeHint"
+        style="font-size: 12px; color: #b9b3a2; margin: 0 0 12px"
+      >
+        เข้าสู่ระบบด้วยชื่อ รหัสผ่าน และเบอร์ที่เคยสมัครไว้
+      </p>
+
+      <input
+        type="text"
+        id="loginUsername"
+        placeholder="ชื่อผู้ใช้ เช่น ต้น, มายด์"
+        maxlength="24"
+        style="margin-bottom: 10px"
+      />
+      <div class="pw-wrap">
+        <input type="password" id="loginPassword" placeholder="รหัสผ่าน" />
+        <button
+          type="button"
+          id="pwToggleBtn"
+          class="pw-toggle"
+          onclick="togglePasswordVisibility()"
+          aria-label="แสดงรหัสผ่าน"
+        >
+          👁
+        </button>
+      </div>
+      <input
+        type="tel"
+        id="loginPhone"
+        placeholder="เบอร์โทร เช่น 0812345678 (ใช้เบอร์ปลอมได้)"
+        maxlength="10"
+      />
+      <p
+        id="loginError"
+        style="color: #ff9b93; font-size: 12px; display: none; margin: 10px 0 0"
+      ></p>
+      <button id="loginBtn" onclick="doLogin()" style="margin-top: 14px">
+        เข้าสู่ระบบ
+      </button>
+    </div>
+  </div>

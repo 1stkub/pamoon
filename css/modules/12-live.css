@@ -1,0 +1,568 @@
+/* live stream — redesigned 2026 "stage" look: everything overlays the video itself
+     (glass pills, gradient fade, floating comments) instead of stacking separate boxes below it. */
+.live-box {
+  background: #0b0b0d;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  position: relative;
+}
+.live-box video {
+  width: 100%;
+  display: block;
+  max-height: 320px;
+  background: #111;
+  object-fit: cover;
+}
+.live-video-wrap {
+  position: relative;
+  background: #111;
+  min-height: 190px;
+}
+.live-video-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 76px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 1;
+}
+/* top bar: LIVE badge + item chip on the left, viewer count + expand on the right — flexbox
+     instead of hand-placed absolute offsets, so it can never overlap as pieces get added */
+.live-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px;
+}
+.live-top-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.live-top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.live-badge-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #e1544a, var(--red));
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  padding: 4px 9px 4px 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(193, 59, 51, 0.5);
+}
+.live-badge-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  animation: livePulse 1.4s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+.live-item-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 999px;
+  padding: 3px 10px 3px 3px;
+  max-width: 150px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.live-item-chip img,
+.live-item-chip .chip-emoji {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+.live-item-chip .chip-text {
+  color: #fff;
+  font-size: 10px;
+  line-height: 1.25;
+  min-width: 0;
+}
+.live-item-chip .chip-text b {
+  display: block;
+  font-weight: 700;
+  font-size: 10.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+.live-viewer-pill {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+.live-viewer-pill::before {
+  content: "👁 ";
+  opacity: 0.85;
+}
+.live-expand-btn {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 13px;
+  cursor: pointer;
+  line-height: 1;
+}
+.live-unmute-btn {
+  position: absolute;
+  top: 52px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  z-index: 3;
+}
+.live-like-fab {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.floating-heart {
+  position: absolute;
+  bottom: 60px;
+  font-size: 22px;
+  pointer-events: none;
+  z-index: 3;
+  animation: floatUp 1.6s ease-out forwards;
+}
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-160px) scale(1.4);
+    opacity: 0;
+  }
+}
+/* connecting/loading state — replaces a black frame while WebRTC negotiates */
+.live-connecting {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(255, 255, 255, 0.07),
+    rgba(0, 0, 0, 0.8)
+  );
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  padding: 0 20px;
+}
+.live-connecting p {
+  margin: 0;
+  opacity: 0.9;
+}
+.live-spinner {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: var(--gold);
+  animation: liveSpin 0.8s linear infinite;
+}
+@keyframes liveSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-spinner {
+    animation: none;
+    border-top-color: rgba(255, 255, 255, 0.6);
+  }
+  .live-badge-pill .dot {
+    animation: none;
+  }
+}
+.live-controls {
+  padding: 10px 12px;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.live-controls button {
+  margin: 0;
+  width: auto;
+  padding: 9px 22px;
+}
+.live-chat-log {
+  max-height: 130px;
+  overflow-y: auto;
+  background: #0d0d0d;
+  padding: 8px 12px 4px;
+  font-size: 12px;
+  color: #eee;
+}
+.live-chat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.live-chat-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 800;
+  margin-top: 1px;
+}
+.live-chat-msg {
+  margin: 0;
+  word-break: break-word;
+  line-height: 1.35;
+}
+.live-chat-input-row {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #1a1a1a;
+  border-top: 1px solid #2a2a2a;
+}
+.live-chat-input-row input {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  background: #2a2a2a;
+  color: #fff;
+}
+.live-chat-input-row input::placeholder {
+  color: #888;
+}
+.live-chat-input-row button {
+  width: auto;
+  margin: 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+  font-size: 12.5px;
+}
+.live-chat-input-row .emoji-toggle-btn,
+.chat-input-row .emoji-toggle-btn {
+  flex: none;
+  width: auto;
+  margin: 0;
+  padding: 0 4px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+.live-offscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 160px;
+  height: 120px;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.live-info-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 70px;
+  z-index: 2;
+  color: #fff;
+  pointer-events: none;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+}
+.live-info-overlay .shop-line {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.live-info-overlay .title-line {
+  margin: 2px 0 0;
+  font-size: 11px;
+  opacity: 0.9;
+}
+.live-filter-row {
+  display: flex;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #0d0d0d;
+  overflow-x: auto;
+}
+.live-filter-row button {
+  flex: none;
+  width: auto;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.live-filter-row button.active {
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+  border-color: #fff;
+}
+.live-box.live-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  border-radius: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.live-box.live-expanded .live-video-wrap {
+  flex: 1;
+  min-height: 0;
+}
+.live-box.live-expanded video {
+  max-height: none;
+  height: 100%;
+  object-fit: contain;
+}
+.live-box.live-expanded .live-chat-log {
+  max-height: 80px;
+}
+.emoji-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #1a1a1a;
+}
+.emoji-row span {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+#chatFullEmojiRow {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.live-reaction-row {
+  display: flex;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #0d0d0d;
+  overflow-x: auto;
+}
+.live-reaction-row button {
+  flex: none;
+  width: auto;
+  margin: 0;
+  padding: 5px 9px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+.live-reaction-row button:active {
+  background: rgba(255, 255, 255, 0.28);
+}
+.live-start-box {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.live-start-box p {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+.badge.live-badge {
+  background: var(--red);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* floating "mini player" — shown while browsing anywhere other than the live's own item screen,
+     so leaving the page minimizes the stream instead of ending it. Docks above the bottom nav bar,
+     confined to the phone frame (.phone has overflow:hidden) so it behaves on both the desktop
+     mockup and the full-bleed mobile layout. */
+#liveMiniDock {
+  position: absolute;
+  right: 12px;
+  bottom: 78px;
+  z-index: 60;
+}
+.live-box.live-mini {
+  width: 104px;
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+.live-box.live-mini video {
+  max-height: 150px;
+  height: 150px;
+}
+.live-box.live-mini .live-video-wrap {
+  min-height: 0;
+}
+.live-box.live-mini .live-top-bar,
+.live-box.live-mini .live-item-chip,
+.live-box.live-mini .live-viewer-pill,
+.live-box.live-mini .live-expand-btn,
+.live-box.live-mini .live-info-overlay,
+.live-box.live-mini .live-like-fab,
+.live-box.live-mini .live-unmute-btn,
+.live-box.live-mini .live-filter-row,
+.live-box.live-mini .live-chat-log,
+.live-box.live-mini .live-reaction-row,
+.live-box.live-mini .emoji-row,
+.live-box.live-mini .live-chat-input-row,
+.live-box.live-mini .live-controls {
+  display: none !important;
+}
+.live-mini-dot {
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  animation: livePulse 1.4s ease-in-out infinite;
+}
+.live-box.live-mini .live-mini-dot {
+  display: block;
+}
+.live-mini-close {
+  display: none;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  z-index: 3;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+.live-box.live-mini .live-mini-close {
+  display: flex;
+}
+.live-mini-label {
+  display: none;
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 8.5px;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+}
+.live-box.live-mini .live-mini-label {
+  display: block;
+}
+

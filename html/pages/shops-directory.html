@@ -1,0 +1,23 @@
+  <!-- SHOP DIRECTORY — browse/search all shops -->
+  <div class="screen hidden" id="screen-shops">
+    <div class="backbtn" onclick="goTo(shopsReturnScreen)">&larr; กลับ</div>
+    <p style="font-size: 15px; font-weight: 700; margin: 2px 0 12px">
+      ร้านค้าทั้งหมด
+    </p>
+    <input
+      type="text"
+      id="shopSearchInput"
+      placeholder="พิมพ์ชื่อร้านที่ต้องการค้นหา..."
+      oninput="renderShopDirectory()"
+      style="
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-size: 13.5px;
+        margin-bottom: 14px;
+        background: #fff;
+      "
+    />
+    <div id="shopDirectoryList"></div>
+  </div>

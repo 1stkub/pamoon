@@ -1,0 +1,16 @@
+  <!-- ACCOUNT SETTINGS — pulled out of "ของฉัน" so it doesn't visually crowd the shop card right below it -->
+  <div class="screen hidden" id="screen-accountsettings">
+    <div class="backbtn" onclick="goTo('mine')">&larr; กลับ</div>
+    <p style="font-size: 15px; font-weight: 700; margin: 2px 0 12px">
+      ตั้งค่าบัญชี
+    </p>
+    <div class="profile-link" onclick="changeMyName()">เปลี่ยนชื่อ &rarr;</div>
+    <div class="profile-link" onclick="changeRole()">เปลี่ยนบทบาท &rarr;</div>
+    <div
+      class="profile-link"
+      style="color: var(--red); border-color: var(--red)"
+      onclick="logout()"
+    >
+      ออกจากระบบ &rarr;
+    </div>
+  </div>

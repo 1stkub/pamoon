@@ -1,0 +1,112 @@
+.navbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  display: flex;
+  padding: 8px 4px calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.navitem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  color: #a29b8b;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.navitem.active {
+  color: var(--ink);
+}
+.navicon {
+  width: 20px;
+  height: 20px;
+}
+.navicon-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.nav-badge {
+  position: absolute;
+  top: -4px;
+  right: -7px;
+  background: var(--red);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  line-height: 1;
+}
+/* bell rings/shakes briefly whenever a genuinely NEW notification arrives (not just on every
+     re-render) — a nudge so a new alert doesn't just silently sit there unnoticed. */
+@keyframes bell-ring {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(18deg);
+  }
+  30% {
+    transform: rotate(-16deg);
+  }
+  45% {
+    transform: rotate(12deg);
+  }
+  60% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+  90% {
+    transform: rotate(-2deg);
+  }
+}
+.navicon-wrap.bell-ring {
+  animation: bell-ring 0.6s ease-in-out 2;
+  transform-origin: 50% 0%;
+}
+@keyframes badge-pop {
+  0% {
+    transform: scale(0.4);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.nav-badge.badge-pop {
+  animation: badge-pop 0.35s ease-out;
+}
+.convo-unread-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+  margin-left: 6px;
+  align-self: center;
+}
+.chat-teaser-unread {
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-left: 6px;
+}
+

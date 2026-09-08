@@ -1,0 +1,239 @@
+  <!-- DETAIL -->
+  <div class="screen hidden" id="screen-detail" style="padding-bottom: 215px">
+    <div class="backbtn" onclick="goTo('feed')">&larr; กลับ</div>
+    <div id="liveSellerStartBox" class="live-start-box hidden">
+      <p>
+        เปิดไลฟ์สดให้คนที่กำลังบิดเห็นหน้าคุณจริงๆ (เดโม:
+        เชื่อมตรงแบบเพื่อนต่อเพื่อน รองรับผู้ชมพร้อมกันได้ไม่มาก)
+      </p>
+      <input
+        type="text"
+        id="liveTitleInput"
+        maxlength="60"
+        placeholder="หัวข้อไลฟ์ (ไม่บังคับ) เช่น มาดูของสะสมชิ้นนี้กัน!"
+        style="margin-bottom: 10px"
+      />
+      <button class="btn btn-primary" style="margin: 0" onclick="startLive()">
+        🔴 เริ่มไลฟ์สด
+      </button>
+    </div>
+    <!-- #liveBox physically moves between here (docked inline, while viewing this exact item) and
+         #liveMiniDock (floating "minimized" player, shown while browsing anywhere else) via
+         updateLiveDock() — reparenting a <video> with a live srcObject does not interrupt playback,
+         so the same WebRTC connection/element keeps running either way; navigating away no longer
+         has to tear the stream down just to get it off screen. -->
+    <div id="liveDockSlot">
+      <div
+        id="liveBox"
+        class="live-box hidden"
+        onclick="handleLiveBoxClick(event)"
+      >
+        <div class="live-video-wrap" id="liveVideoWrap">
+          <video id="liveVideoEl" autoplay playsinline muted></video>
+          <div class="live-connecting hidden" id="liveConnecting">
+            <div class="live-spinner"></div>
+            <p>กำลังเชื่อมต่อสด...</p>
+          </div>
+          <div class="live-top-bar">
+            <div class="live-top-left">
+              <div class="live-badge-pill"><span class="dot"></span>LIVE</div>
+              <div class="live-item-chip" id="liveItemChip"></div>
+            </div>
+            <div class="live-top-right">
+              <div class="live-viewer-pill" id="liveViewerCount">0</div>
+              <button
+                class="live-expand-btn"
+                id="liveExpandBtn"
+                onclick="
+                  event.stopPropagation();
+                  toggleLiveExpand();
+                "
+              >
+                ⤢
+              </button>
+            </div>
+          </div>
+          <div class="live-info-overlay" id="liveInfoOverlay"></div>
+          <button
+            class="live-unmute-btn hidden"
+            id="liveUnmuteBtn"
+            onclick="
+              event.stopPropagation();
+              unmuteLive();
+            "
+          >
+            🔇 แตะเพื่อเปิดเสียง
+          </button>
+          <button
+            class="live-like-fab"
+            id="liveLikeFab"
+            onclick="
+              event.stopPropagation();
+              sendLiveLike();
+            "
+          >
+            ❤️ <span id="liveLikeCount">0</span>
+          </button>
+          <!-- mini-player-only affordances (hidden unless .live-box has .live-mini — see CSS) -->
+          <div class="live-mini-dot"></div>
+          <p class="live-mini-label">แตะเพื่อขยาย</p>
+          <button
+            class="live-mini-close"
+            onclick="
+              event.stopPropagation();
+              miniCloseLive();
+            "
+          >
+            ✕
+          </button>
+        </div>
+        <div class="live-filter-row hidden" id="liveFilterRow"></div>
+        <div class="live-chat-log" id="liveChatLog"></div>
+        <div class="live-reaction-row" id="liveReactionRow"></div>
+        <div class="emoji-row hidden" id="liveEmojiRow"></div>
+        <div class="live-chat-input-row">
+          <button
+            class="emoji-toggle-btn"
+            onclick="toggleEmojiRow('liveEmojiRow', 'liveChatInput')"
+            type="button"
+          >
+            😀
+          </button>
+          <input
+            type="text"
+            id="liveChatInput"
+            maxlength="200"
+            placeholder="พิมพ์แชทในไลฟ์..."
+            onkeydown="if (event.key === 'Enter') sendLiveChat();"
+          />
+          <button onclick="sendLiveChat()">ส่ง</button>
+        </div>
+        <div class="live-controls" id="liveControls"></div>
+      </div>
+    </div>
+    <!-- broadcaster-only filter pipeline: real camera frames get redrawn onto this canvas each
+         frame with a CSS filter applied, and the canvas's OWN captured stream (not the raw
+         camera) is what's actually sent over WebRTC — so a filter affects viewers too, not just
+         the broadcaster's own preview. Both elements stay off-screen but rendered (not display:none —
+         a zero-size/undisplayed <video> can stop producing frames for drawImage() to read). -->
+    <video
+      id="liveRawVideoEl"
+      class="live-offscreen"
+      autoplay
+      playsinline
+      muted
+    ></video>
+    <canvas id="liveFilterCanvas" class="live-offscreen"></canvas>
+    <div class="detail-media" id="detailMedia"></div>
+    <div class="gallery-strip hidden" id="galleryStrip"></div>
+    <p class="detail-title" id="detailTitle"></p>
+    <p class="detail-cat" id="detailCat"></p>
+
+    <div class="price-panel">
+      <div class="price-panel-row">
+        <div>
+          <p class="price-label">ราคาปัจจุบัน</p>
+          <p class="price-big" id="detailPrice">0 ฿</p>
+        </div>
+        <div style="text-align: right">
+          <p class="price-label">เหลือเวลา</p>
+          <p class="timer-big" id="detailTimer">00:00</p>
+        </div>
+      </div>
+      <p class="bidcount" id="detailBidCount"></p>
+      <p class="buynow-info hidden" id="buyNowInfo"></p>
+    </div>
+
+    <div id="winPanel" class="hidden"></div>
+
+    <div id="chatTeaser" class="chat-teaser hidden"></div>
+
+    <div id="detailDescriptionBox" class="hidden" style="margin-bottom: 14px">
+      <p style="font-size: 12.5px; font-weight: 700; margin: 0 0 6px">
+        รายละเอียดสินค้า
+      </p>
+      <p
+        id="detailDescriptionText"
+        style="
+          font-size: 13px;
+          color: var(--ink-soft);
+          white-space: pre-wrap;
+          margin: 0;
+          background: var(--card);
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          padding: 12px 14px;
+        "
+      ></p>
+    </div>
+
+    <div class="info-row" id="detailSellerRow" style="cursor: pointer">
+      <div style="font-size: 20px">👤</div>
+      <div>
+        <p style="margin: 0; font-weight: 700" id="detailSellerName"></p>
+        <p style="margin: 2px 0 0; font-size: 11.5px; color: var(--ink-soft)">
+          ผู้ลงประกาศ · แตะเพื่อดูหน้าร้าน
+        </p>
+      </div>
+    </div>
+
+    <div
+      id="ownerActionsBox"
+      class="hidden"
+      style="display: flex; gap: 8px; margin-bottom: 14px"
+    >
+      <button
+        class="btn btn-outline"
+        style="margin: 0; padding: 10px; font-size: 12.5px"
+        onclick="openEditListing(currentItemId)"
+      >
+        แก้ไขประกาศ
+      </button>
+      <button
+        class="btn btn-outline"
+        style="
+          margin: 0;
+          padding: 10px;
+          font-size: 12.5px;
+          color: var(--red);
+          border-color: var(--red);
+        "
+        onclick="deleteListing(currentItemId)"
+      >
+        ลบประกาศ
+      </button>
+    </div>
+    <p
+      id="ownerActionsHint"
+      class="hidden"
+      style="font-size: 11px; color: var(--ink-soft); margin: -8px 0 14px"
+    ></p>
+    <p
+      id="reportListingLink"
+      class="hidden"
+      style="
+        font-size: 11.5px;
+        color: var(--ink-soft);
+        text-decoration: underline;
+        cursor: pointer;
+        margin: -8px 0 14px;
+      "
+    >
+      🚩 รายงานประกาศนี้
+    </p>
+    <p
+      id="adminDeleteLink"
+      class="hidden"
+      style="
+        font-size: 11.5px;
+        color: var(--red);
+        text-decoration: underline;
+        cursor: pointer;
+        margin: -8px 0 14px;
+      "
+    >
+      🛡️ ลบประกาศนี้ (แอดมิน)
+    </p>
+
+    <div class="log" id="detailLog"></div>
+  </div>

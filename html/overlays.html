@@ -1,0 +1,109 @@
+  <!-- CROP MODAL — shared by listing photos and shop logo -->
+  <div class="crop-overlay hidden" id="cropOverlay">
+    <p style="color: #fff; font-size: 14px; font-weight: 700; margin: 0 0 14px">
+      ปรับตำแหน่ง/ซูมรูป
+    </p>
+    <div class="crop-frame" id="cropFrame">
+      <img id="cropImgEl" alt="" />
+    </div>
+    <div class="crop-zoom-row">
+      <span style="color: #b9b3a2; font-size: 16px">－</span>
+      <input
+        type="range"
+        id="cropZoomRange"
+        min="0"
+        max="1"
+        step="0.01"
+        oninput="cropZoomChange(this.value)"
+      />
+      <span style="color: #b9b3a2; font-size: 16px">＋</span>
+    </div>
+    <p class="crop-hint">
+      ลากรูปเพื่อเลื่อนตำแหน่ง ใช้แถบเลื่อนเพื่อซูมเข้า-ออก
+    </p>
+    <div class="crop-actions">
+      <button class="btn btn-outline" style="margin: 0" onclick="cancelCrop()">
+        ยกเลิก
+      </button>
+      <button class="btn btn-primary" style="margin: 0" onclick="confirmCrop()">
+        ใช้รูปนี้
+      </button>
+    </div>
+  </div>
+
+  <!-- REPORT MODAL — shared by "report this listing" and "report this person after an order" —
+       lightweight community-flag, reviewed manually by the founder via the Firestore console during
+       this closed-testing phase (no in-app admin screen yet, kept simple on purpose). -->
+  <div class="report-overlay hidden" id="reportOverlay">
+    <div class="report-card">
+      <p class="report-title" id="reportTitle">รายงานประกาศนี้</p>
+      <p class="report-sub" id="reportSub">
+        เลือกเหตุผลที่ตรงที่สุด ทีมงานจะตรวจสอบให้
+      </p>
+      <div id="reportReasonList"></div>
+      <button class="report-cancel" onclick="closeReportModal()">ยกเลิก</button>
+    </div>
+  </div>
+
+  <!-- ONBOARDING TIP -->
+  <div class="tip-overlay hidden" id="tipOverlay">
+    <div class="tip-sheet">
+      <h3>เริ่มต้นใช้งาน Pramoon</h3>
+      <ul>
+        <li>
+          <b>บิดแล้วถือว่าผูกพัน</b> — ต้องติดต่อชำระเงินจริงถ้าคุณชนะประมูล
+        </li>
+        <li>
+          <b>แตะชื่อร้าน</b>
+          ที่การ์ดสินค้าหรือหน้ารายละเอียดเพื่อดูหน้าร้านและประวัติการขาย
+        </li>
+        <li>
+          หลังปิดประมูล ไปนัด<b>ชำระเงิน/จัดส่ง</b>กันเองได้ในแท็บ <b>"แชท"</b>
+        </li>
+        <li>
+          ราคา/การชำระเงินในแอปนี้เป็น<b>โหมดทดสอบ</b> เงินจริงยังไม่ผ่านระบบ
+        </li>
+      </ul>
+      <button class="btn btn-primary" style="margin: 0" onclick="closeTip()">
+        เข้าใจแล้ว เริ่มใช้งาน
+      </button>
+    </div>
+  </div>
+
+  <!-- PHOTO LIGHTBOX -->
+  <div class="lightbox hidden" id="lightboxOverlay" onclick="closeLightbox()">
+    <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+    <div
+      class="lightbox-nav prev hidden"
+      id="lightboxPrev"
+      onclick="
+        event.stopPropagation();
+        lightboxStep(-1);
+      "
+    >
+      &lsaquo;
+    </div>
+    <img
+      id="lightboxImg"
+      src=""
+      alt=""
+      onclick="event.stopPropagation()"
+      ondblclick="lightboxDoubleTap(event)"
+      onwheel="lightboxWheel(event)"
+      ontouchstart="lightboxTouchStart(event)"
+      ontouchmove="lightboxTouchMove(event)"
+      ontouchend="lightboxTouchEnd(event)"
+    />
+    <div
+      class="lightbox-nav next hidden"
+      id="lightboxNext"
+      onclick="
+        event.stopPropagation();
+        lightboxStep(1);
+      "
+    >
+      &rsaquo;
+    </div>
+    <div class="lightbox-count hidden" id="lightboxCount"></div>
+    <p class="lightbox-zoom-hint">แตะสองครั้งหรือบีบนิ้วเพื่อซูม</p>
+  </div>

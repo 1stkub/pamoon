@@ -1,0 +1,115 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Pramoon Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- CSS แยกไฟล์ตามประเภท โหลดตามลำดับนี้เท่านั้น (ลำดับมีผลต่อ cascade เวลาความสำคัญเท่ากัน) -->
+<link rel="stylesheet" href="css/modules/01-base.css">                 <!-- ตัวแปรสี, reset, ฟอนต์พื้นฐาน -->
+<link rel="stylesheet" href="css/modules/02-shell-and-cards.css">      <!-- กรอบโทรศัพท์, topbar, การ์ดทั่วไป, แท็บ -->
+<link rel="stylesheet" href="css/modules/03-photo-grid.css">           <!-- กริดรูปภาพตอนลงขาย -->
+<link rel="stylesheet" href="css/modules/04-modals.css">               <!-- crop modal, report modal, lightbox -->
+<link rel="stylesheet" href="css/modules/05-shop-directory-tip.css">   <!-- รายการร้านค้า, กล่องแนะนำการใช้งาน -->
+<link rel="stylesheet" href="css/modules/06-badges-feed.css">          <!-- ป้ายสถานะ, การ์ดสินค้า, ตัวควบคุมฟีด -->
+<link rel="stylesheet" href="css/modules/07-category-recommend.css">   <!-- หมวดหมู่, ร้าน/สินค้าแนะนำ -->
+<link rel="stylesheet" href="css/modules/08-navbar.css">               <!-- แถบเมนูล่าง -->
+<link rel="stylesheet" href="css/modules/09-toast-notifications.css">  <!-- toast, ศูนย์แจ้งเตือน -->
+<link rel="stylesheet" href="css/modules/10-detail-bidbox-chat.css">   <!-- หน้ารายละเอียด, กล่องบิด, แชทพื้นฐาน -->
+<link rel="stylesheet" href="css/modules/11-chatfull-review.css">      <!-- แชทเต็มจอ, ให้ดาวรีวิว -->
+<link rel="stylesheet" href="css/modules/12-live.css">                 <!-- ไลฟ์สด -->
+<link rel="stylesheet" href="css/modules/13-shop-reviews-convo.css">   <!-- รีวิวร้าน, รายการแชท -->
+<link rel="stylesheet" href="css/modules/14-shop-storefront.css">      <!-- หน้าร้านค้า -->
+<link rel="stylesheet" href="css/modules/15-buttons-rules-misc.css">   <!-- ปุ่มทั่วไป, กติกา, อื่นๆ -->
+<link rel="stylesheet" href="css/modules/16-auth-gate.css">            <!-- หน้าเข้าสู่ระบบ/สมัครสมาชิก -->
+
+<div id="app"></div>
+
+<script>
+  // โหลดชิ้นส่วน HTML ของแต่ละหน้า + สคริปต์ต่อเป็นลำดับ
+  // (ต้องรันผ่านเว็บเซิร์ฟเวอร์ เช่น deploy จริง หรือ `npx serve` ตอน dev — เปิดไฟล์ตรงๆ (file://) จะโหลดไม่ได้เพราะ fetch ถูกบล็อกโดย browser)
+  function loadScript(src){
+    return new Promise((resolve, reject)=>{
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error('โหลดสคริปต์ไม่สำเร็จ: ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function loadText(src){
+    const res = await fetch(src);
+    if(!res.ok) throw new Error('โหลด ' + src + ' ไม่สำเร็จ');
+    return res.text();
+  }
+
+  (async function boot(){
+    try{
+      // ทุกหน้า/ชิ้นส่วนของ UI แยกไฟล์กันเป็นอิสระ (แก้ไฟล์ไหนก็ไม่กระทบไฟล์อื่น) — ลำดับใน
+      // อาร์เรย์นี้กำหนดแค่ลำดับที่ประกอบกันใน DOM เท่านั้น ไม่มีผลต่อการทำงาน เพราะแต่ละหน้าโชว์/ซ่อน
+      // ด้วย class "hidden" ผ่าน goTo() ใน JS อยู่แล้ว
+      const htmlPieces = [
+        'html/auth-gate.html',              // หน้าจอเข้าสู่ระบบ/สมัครสมาชิก
+        'html/shell-top.html',              // แถบบนสุด (topbar) + แถบเตือน (warnBar)
+        'html/pages/feed.html',             // หน้าฟีดสินค้า
+        'html/pages/category.html',         // หน้าหมวดหมู่
+        'html/pages/sell.html',             // หน้าลงขาย
+        'html/pages/mine.html',             // หน้า "ของฉัน"
+        'html/pages/feedback.html',         // หน้า feedback
+        'html/pages/account-settings.html', // หน้าตั้งค่าบัญชี
+        'html/pages/rules.html',            // หน้ากติกา
+        'html/pages/detail.html',           // หน้ารายละเอียดสินค้า (รวมไลฟ์สด)
+        'html/pages/messages.html',         // หน้ารายการแชท
+        'html/pages/livehub.html',          // หน้ารวมไลฟ์
+        'html/pages/notifications.html',    // หน้าแจ้งเตือน
+        'html/pages/admin.html',            // หน้าแอดมิน
+        'html/pages/chat.html',             // หน้าแชทเต็มจอ
+        'html/pages/shop.html',             // หน้าร้านค้า
+        'html/pages/shop-review.html',      // หน้ารีวิวร้าน
+        'html/pages/shops-directory.html',  // หน้ารวมร้านค้าทั้งหมด
+        'html/overlays.html',               // โมดัลที่ใช้ร่วมกัน (crop, report, tip, lightbox)
+        'html/shell-bottom.html',           // แถบล่างสุด (bidbar, navbar) + toast + live mini dock
+      ];
+      const htmlParts = await Promise.all(htmlPieces.map(loadText));
+
+      document.getElementById('app').innerHTML =
+        '<div class="phone">' + htmlParts.join('\n') + '</div>';
+
+      await loadScript('https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js');
+      await loadScript('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js');
+      await loadScript('javascript/firebase-config.js');
+
+      // โมดูลแอปหลัก แยกไฟล์ตามฟังก์ชันการทำงาน — ต้องโหลดตามลำดับนี้เท่านั้น
+      // (โค้ดยังใช้ตัวแปร/ฟังก์ชันร่วมกันแบบ global ไม่ใช่ ES module ลำดับการโหลดจึงสำคัญ)
+      const modules = [
+        '01-data',            // ข้อมูลหมวดหมู่, ตัวช่วย format ราคา/เวลา, กฎการบิด
+        '02-identity',        // ระบบเข้าสู่ระบบ/สมัครสมาชิก (device-local)
+        '03-media',           // สถานะ db, บีบอัดรูป, crop modal, ตัวเลือกรูปหลายใบ
+        '04-navigation',      // สลับหน้าจอ (goTo)
+        '05-feed',            // หน้าฟีดสินค้า, แนะนำร้าน/สินค้า
+        '06-sell',            // ฟอร์มลงขาย, การแจ้งเตือน (report)
+        '07-admin',           // แผงควบคุมแอดมิน
+        '08-live',            // ไลฟ์สด (WebRTC), แชทไลฟ์, ฟิลเตอร์
+        '09-detail-photo',    // สไลด์รูปหน้ารายละเอียด, lightbox, toast
+        '10-notifications',   // ศูนย์แจ้งเตือน (โดนบิดแซง, มีคนบิด, ปิดประมูล)
+        '11-detail-render',   // เรนเดอร์หน้ารายละเอียดสินค้า, กล่องบิด
+        '12-chat',            // แชทหลังปิดประมูล (ผู้ซื้อ-ผู้ขาย)
+        '13-messages-shop',   // รายการแชท, หน้าร้านค้า
+        '14-mine',            // จัดการร้าน/โปรไฟล์ในหน้า "ของฉัน"
+        '15-feedback',        // แบบฟอร์ม feedback
+        '16-boot',            // tick loop + โค้ดสตาร์ทแอป (ต้องมาสุดท้าย)
+      ];
+      for (const m of modules) {
+        await loadScript('javascript/modules/' + m + '.js');
+      }
+    }catch(err){
+      console.error(err);
+      document.getElementById('app').innerHTML =
+        '<p style="padding:24px;font-family:sans-serif;color:#c00;">โหลดหน้าเว็บไม่สำเร็จ: ' +
+        (err && err.message ? err.message : err) +
+        '<br>ต้องเปิดผ่านเว็บเซิร์ฟเวอร์ (http://...) ไม่ใช่เปิดไฟล์ตรงๆ (file://)</p>';
+    }
+  })();
+</script>

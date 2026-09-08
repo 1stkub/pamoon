@@ -1,0 +1,126 @@
+.phone {
+  width: 390px;
+  max-width: 100%;
+  background: var(--cream);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: min(780px, 92vh);
+}
+/* on an actual phone-width screen, the app IS the screen — no fake frame, no wasted margins */
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+  .phone {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+.topbar {
+  background: var(--ink);
+  color: #fff;
+  padding: 16px 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.brand {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.brand span {
+  color: var(--gold);
+}
+.conndot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8a8577;
+  flex-shrink: 0;
+}
+.conndot.live {
+  background: var(--green);
+}
+.conndot.bad {
+  background: var(--red);
+}
+.screen {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 14px 90px;
+} /* 90px clears the fixed bottom nav bar so the last list item is never hidden under it */
+.hidden {
+  display: none !important;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+}
+.tab {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.tab.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.card:active {
+  transform: scale(0.98);
+}
+.thumb {
+  height: 130px;
+  background: linear-gradient(135deg, #ede9df, #ded7c4);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a79e8c;
+  font-size: 28px;
+  font-weight: 700;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#sellPhotoPreview img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  margin-top: 8px;
+  max-height: 180px;
+  object-fit: cover;
+}
+

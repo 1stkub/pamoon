@@ -1,0 +1,33 @@
+  <!-- FEED -->
+  <div class="screen hidden" id="screen-feed">
+    <div class="tabs" id="feedTabs"></div>
+    <div class="catfilterbar" id="catFilterBar" style="display: none"></div>
+    <div class="feed-search-row">
+      <input
+        type="text"
+        id="feedSearchInput"
+        placeholder="🔍 ค้นหาชื่อสินค้า..."
+        oninput="renderFeed()"
+      />
+    </div>
+    <div class="feed-controls-row">
+      <select id="sortSelect" onchange="setSortOrder(this.value)">
+        <option value="newest">ลงล่าสุดก่อน</option>
+        <option value="oldest">ลงเก่าสุดก่อน</option>
+        <option value="priceLow">ราคาต่ำ &rarr; สูง</option>
+        <option value="priceHigh">ราคาสูง &rarr; ต่ำ</option>
+      </select>
+      <div class="view-toggle">
+        <span
+          id="viewListBtn"
+          onclick="setFeedView('list')"
+          title="มุมมองรายการ"
+          >☰</span
+        >
+        <span id="viewGridBtn" onclick="setFeedView('grid')" title="มุมมองตาราง"
+          >▦</span
+        >
+      </div>
+    </div>
+    <div id="feedList"></div>
+  </div>

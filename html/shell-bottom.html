@@ -1,0 +1,130 @@
+  <div class="bidbar hidden" id="bidbar">
+    <div class="bidder-status hidden" id="bidderStatusBar"></div>
+    <button
+      class="buynow-btn hidden"
+      id="buyNowBtn"
+      onclick="buyNow(currentItemId)"
+    ></button>
+    <p
+      id="bidCapReachedMsg"
+      class="hidden"
+      style="margin: 0; font-size: 12px; font-weight: 700; color: var(--red)"
+    >
+      🚫 ถึงเพดานราคาบิดสูงสุดแล้ว (100 เท่าของราคาเริ่มต้น) — บิดต่อไม่ได้
+    </p>
+    <div
+      id="bidInputGroup"
+      style="display: flex; flex-direction: column; gap: 8px"
+    >
+      <p
+        style="
+          margin: 0;
+          font-size: 11.5px;
+          font-weight: 700;
+          color: var(--ink-soft);
+        "
+      >
+        ใส่ราคาที่จะบิดเอง (บาท) แล้วกดยืนยัน
+      </p>
+      <div class="bidrow">
+        <input
+          type="number"
+          id="bidInput"
+          inputmode="numeric"
+          onfocus="this.select()"
+          oninput="bidInputTouched = true"
+        />
+        <button class="bidbtn" id="bidBtn" onclick="submitBid()">
+          ยืนยันบิด
+        </button>
+      </div>
+      <div class="quickrow" id="quickRow"></div>
+    </div>
+    <div class="bidmsg" id="bidMsg"></div>
+  </div>
+
+  <div class="navbar" id="navbar">
+    <div class="navitem active" id="nav-feed" onclick="homeTab()">
+      <svg
+        class="navicon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M3 12l9-9 9 9M5 10v10h14V10" />
+      </svg>
+      หน้าแรก
+    </div>
+    <div class="navitem" id="nav-cat" onclick="goTo('cat')">
+      <svg
+        class="navicon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect x="3" y="3" width="7" height="7" />
+        <rect x="14" y="3" width="7" height="7" />
+        <rect x="3" y="14" width="7" height="7" />
+        <rect x="14" y="14" width="7" height="7" />
+      </svg>
+      หมวดหมู่
+    </div>
+    <div class="navitem" id="nav-sell" onclick="openSell()">
+      <svg
+        class="navicon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+      ลงขาย
+    </div>
+    <div class="navitem" id="nav-live" onclick="goTo('livehub')">
+      <svg
+        class="navicon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="12" r="3" />
+        <circle cx="12" cy="12" r="9" />
+      </svg>
+      ไลฟ์
+    </div>
+    <div class="navitem" id="nav-chat" onclick="goTo('messages')">
+      <svg
+        class="navicon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
+        />
+      </svg>
+      แชท
+    </div>
+    <div class="navitem" id="nav-mine" onclick="goTo('mine')">
+      <svg
+        class="navicon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
+      </svg>
+      ของฉัน
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <!-- floating dock #liveBox moves into here (see updateLiveDock()) whenever a live session
+       is running but you've navigated away from that item's own detail screen. -->
+  <div class="live-mini-dock hidden" id="liveMiniDock"></div>

@@ -1,0 +1,74 @@
+  <!-- FULL-SCREEN CHAT -->
+  <div class="screen hidden" id="screen-chatfull">
+    <div class="backbtn" onclick="goTo(chatReturnScreen)">&larr; กลับ</div>
+    <div
+      class="chatfull-header"
+      onclick="openShopFromChat()"
+      style="cursor: pointer"
+    >
+      <div class="avatar-dot" id="chatFullAvatar">👤</div>
+      <div>
+        <p
+          style="margin: 0; font-weight: 700; font-size: 14px"
+          id="chatFullTitle"
+        ></p>
+        <p
+          style="margin: 2px 0 0; font-size: 11.5px; color: var(--ink-soft)"
+          id="chatFullSub"
+        ></p>
+      </div>
+      <span style="margin-left: auto; color: var(--ink-soft); font-size: 16px"
+        >&rsaquo;</span
+      >
+    </div>
+    <div class="chat-order-status hidden" id="chatOrderStatus"></div>
+    <div class="chatfull-box" id="chatFullMessages"></div>
+    <div class="emoji-row hidden" id="chatFullEmojiRow"></div>
+    <div class="chat-input-row" style="margin-top: 10px">
+      <button
+        class="emoji-toggle-btn"
+        onclick="toggleEmojiRow('chatFullEmojiRow', 'chatFullInput')"
+        type="button"
+      >
+        😀
+      </button>
+      <button
+        class="emoji-toggle-btn"
+        onclick="document.getElementById('chatImageInput').click()"
+        type="button"
+        title="ส่งรูป"
+      >
+        📷
+      </button>
+      <input
+        type="file"
+        id="chatImageInput"
+        accept="image/*"
+        class="hidden"
+        onchange="handleChatImageSelect(event)"
+      />
+      <button
+        class="emoji-toggle-btn"
+        onclick="document.getElementById('chatFileInput').click()"
+        type="button"
+        title="แนบไฟล์/หลักฐานการโอนเงิน"
+      >
+        📎
+      </button>
+      <input
+        type="file"
+        id="chatFileInput"
+        accept="image/*,.pdf,.doc,.docx,.txt"
+        class="hidden"
+        onchange="handleChatFileSelect(event)"
+      />
+      <input
+        type="text"
+        id="chatFullInput"
+        placeholder="พิมพ์ข้อความ..."
+        maxlength="500"
+        onkeydown="if (event.key === 'Enter') sendChatMessage();"
+      />
+      <button onclick="sendChatMessage()">ส่ง</button>
+    </div>
+  </div>

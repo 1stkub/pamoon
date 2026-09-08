@@ -1,0 +1,160 @@
+.namegate {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+  color: #fff;
+  overflow-y: auto;
+}
+.namegate.hidden {
+  display: none;
+}
+.namegate input {
+  width: 100%;
+  max-width: 260px;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 14px;
+  font-size: 15px;
+  margin: 18px 0 12px;
+  text-align: center;
+}
+.auth-tabs {
+  display: flex;
+  width: 100%;
+  max-width: 260px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 3px;
+}
+.auth-tab {
+  flex: 1;
+  text-align: center;
+  padding: 9px 0;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #b9b3a2;
+  cursor: pointer;
+}
+.auth-tab.active {
+  background: var(--gold);
+  color: #fff;
+}
+.pw-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  margin: 18px 0 12px;
+  align-items: center;
+}
+.pw-wrap input {
+  width: 100%;
+  margin: 0;
+  padding-right: 42px;
+  text-align: center;
+  align-items: center;
+}
+/* #pwToggleBtn (id, not just .pw-toggle) is needed to outrank ".namegate button"'s
+     width/background/padding — a plain class here loses that specificity fight and the
+     button renders as a big gold block instead of a small inline eye icon */
+#pwToggleBtn.pw-toggle {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  max-width: none;
+  background: none;
+  border: none;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 8px 10px;
+  color: #6b6558;
+}
+#pwToggleBtn.pw-toggle:hover {
+  color: #3a3e4a;
+  background: none;
+}
+.namegate button {
+  width: 100%;
+  max-width: 260px;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--gold);
+  color: #fff;
+  cursor: pointer;
+}
+.role-card {
+  width: 100%;
+  max-width: 280px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.role-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.role-card .emoji {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.role-card b {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.role-card span {
+  font-size: 11.5px;
+  color: #b9b3a2;
+}
+.warnbar {
+  background: var(--red-soft);
+  color: var(--red);
+  font-size: 11.5px;
+  padding: 8px 12px;
+  text-align: center;
+}
+.trial-box {
+  width: 100%;
+  max-width: 260px;
+  background: rgba(200, 134, 43, 0.14);
+  border: 1px solid rgba(200, 134, 43, 0.4);
+  border-radius: 12px;
+  padding: 11px 14px;
+  margin: 0 0 16px;
+  text-align: left;
+}
+.trial-box-title {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.trial-box-text {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #d8d3c5;
+}
+.trial-box-text b {
+  color: #fff;
+}

@@ -1,0 +1,373 @@
+.backbtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.detail-media {
+  height: 220px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ede9df, #ded7c4);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a79e8c;
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+/* contain, not cover — a listing photo can be any shape (a wide screenshot showing off a game
+     account's stats, a tall portrait shot, etc.) and cropping it to fill the box was cutting real
+     content off; letterboxing against the box's own soft background looks intentional, not broken */
+.detail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.detail-title {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  word-break: break-word;
+}
+.detail-cat {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+.price-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.price-panel-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.price-label {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
+}
+.price-big {
+  font-size: 28px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.timer-big {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.timer-big.urgent {
+  color: var(--red);
+}
+.bidcount {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+.buynow-info {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 6px 0 0;
+  background: var(--gold-soft);
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+.field label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.field input[type="text"],
+.field input[type="number"],
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13.5px;
+  font-family: inherit;
+  background: #fff;
+  color: var(--ink);
+}
+.select-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.chip-opt {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  background: #fff;
+  line-height: 1.5;
+}
+.chip-opt.selected {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+  font-weight: 700;
+}
+.fee-note {
+  background: var(--gold-soft);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+
+.bidbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  padding: 10px 14px calc(18px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bidrow {
+  display: flex;
+  gap: 8px;
+}
+.bidrow input {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+.bidbtn {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.quickrow {
+  display: flex;
+  gap: 8px;
+}
+.quickbtn {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bidmsg {
+  font-size: 11.5px;
+  color: var(--red);
+  min-height: 14px;
+}
+
+.log {
+  max-height: 150px;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 13px;
+  margin-bottom: 14px;
+  font-size: 12.5px;
+}
+.log p {
+  margin: 5px 0;
+  color: var(--ink-soft);
+}
+.log p b {
+  color: var(--ink);
+}
+
+.win-panel {
+  background: var(--green-soft);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.win-panel.warn {
+  background: var(--red-soft);
+}
+.win-panel.neutral {
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.win-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.chat-box {
+  max-height: 220px;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.chat-bubble-row {
+  display: flex;
+  justify-content: flex-start;
+}
+.chat-bubble-row.me {
+  justify-content: flex-end;
+}
+.chat-bubble {
+  max-width: 78%;
+  background: var(--cream);
+  border-radius: 12px 12px 12px 3px;
+  padding: 7px 11px;
+  font-size: 12.5px;
+}
+.chat-bubble.me {
+  background: var(--gold-soft);
+  border-radius: 12px 12px 3px 12px;
+}
+.chat-bubble b {
+  display: block;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+.chat-bubble span {
+  color: var(--ink);
+  word-break: break-word;
+}
+.chat-bubble time {
+  display: block;
+  font-size: 9.5px;
+  color: var(--ink-soft);
+  margin-top: 3px;
+  text-align: right;
+}
+.chat-bubble.has-img {
+  padding: 6px;
+}
+.chat-bubble-img {
+  display: block;
+  max-width: 100%;
+  max-height: 220px;
+  border-radius: 9px;
+  cursor: pointer;
+  object-fit: cover;
+}
+.chat-file-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 12px;
+  max-width: 220px;
+}
+.chat-file-chip span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chat-file-chip b {
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.chat-input-row input {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-size: 13px;
+}
+.chat-input-row button {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* chat teaser inside item detail — links out to the full chat screen */
+.chat-teaser {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px 15px;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+.chat-teaser b {
+  font-size: 13px;
+}
+.chat-teaser span {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+

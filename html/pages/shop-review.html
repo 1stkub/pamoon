@@ -1,0 +1,22 @@
+  <!-- WRITE SHOP REVIEW -->
+  <div class="screen hidden" id="screen-shopreview">
+    <div class="backbtn" onclick="goTo('chatfull')">&larr; กลับ</div>
+    <p style="font-size: 15px; font-weight: 700; margin: 2px 0 4px">
+      เขียนรีวิวร้านค้า
+    </p>
+    <p
+      style="font-size: 12px; color: var(--ink-soft); margin: 0 0 16px"
+      id="shopReviewLabel"
+    ></p>
+    <div class="star-row" id="shopReviewStars"></div>
+    <div class="field">
+      <textarea
+        id="shopReviewText"
+        maxlength="300"
+        placeholder="สินค้าตรงปก ส่งไว แพ็คดี..."
+      ></textarea>
+    </div>
+    <button class="btn btn-primary" onclick="submitShopReview()">
+      ส่งรีวิว
+    </button>
+  </div>

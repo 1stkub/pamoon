@@ -1,0 +1,130 @@
+  <!-- SELL -->
+  <div class="screen hidden" id="screen-sell">
+    <div class="backbtn" id="sellBackBtn" onclick="goTo('feed')">
+      &larr; กลับ
+    </div>
+    <p
+      style="font-size: 15px; font-weight: 700; margin: 2px 0 4px"
+      id="sellScreenTitle"
+    >
+      ลงประกาศสินค้าประมูล
+    </p>
+    <p style="font-size: 12px; color: var(--ink-soft); margin: 0 0 16px">
+      ลงเป็น <b id="sellAsName"></b> — ทุกคนที่เปิดลิงก์นี้จะเห็นและบิดได้จริง
+    </p>
+
+    <div class="field">
+      <label>รูปสินค้า (อย่างน้อย 2 รูป สูงสุด 10 รูป)</label>
+      <p style="font-size: 11px; color: var(--ink-soft); margin: 0 0 8px">
+        แนะนำรูปสี่เหลี่ยมจัตุรัส แสงสว่างชัดเจน ถ่ายหลายมุม —
+        เลือกรูปแล้วซูม/เลื่อนครอปได้ก่อนเพิ่มเข้าอัลบั้ม
+      </p>
+      <div class="photo-grid" id="sellPhotoGrid"></div>
+      <p class="photo-count-hint" id="sellPhotoHint"></p>
+      <input
+        type="file"
+        accept="image/*"
+        id="sellPhotoInput"
+        onchange="handleSellPhotoPick(event)"
+        class="hidden"
+      />
+    </div>
+
+    <div class="field">
+      <label>ชื่อสินค้า</label>
+      <input
+        type="text"
+        id="sellName"
+        placeholder="เช่น นาฬิกาวินเทจ Seiko 5"
+        maxlength="60"
+      />
+    </div>
+
+    <div class="field">
+      <label>หมวดหมู่</label>
+      <div class="select-row" id="sellCatGrid"></div>
+    </div>
+
+    <div class="field hidden" id="sellSubcatField">
+      <label id="sellSubcatLabel">ประเภทย่อย (ไม่บังคับ)</label>
+      <div class="select-row" id="sellSubcatGrid"></div>
+      <input
+        type="text"
+        id="sellSubcatText"
+        class="hidden"
+        maxlength="40"
+        placeholder="เช่น ROV, Genshin Impact, Valorant"
+        oninput="selectedSellSubcat = sanitizeFreeTag(this.value) || null"
+      />
+    </div>
+
+    <div class="field">
+      <label>รายละเอียดสินค้า</label>
+      <textarea
+        id="sellDescription"
+        maxlength="1000"
+        placeholder="สภาพสินค้า, ตำหนิ (ถ้ามี), อุปกรณ์ที่ให้มา, เหตุผลที่ขาย ฯลฯ"
+      ></textarea>
+    </div>
+
+    <div class="field">
+      <label>ราคาเริ่มต้น (฿)</label>
+      <input type="number" id="sellPrice" placeholder="500" min="1" />
+    </div>
+
+    <div class="field">
+      <label>ราคาปิดประมูลทันที (ไม่บังคับ)</label>
+      <p style="font-size: 11px; color: var(--ink-soft); margin: 0 0 8px">
+        ถ้ามีคนบิดถึงราคานี้ ประมูลจะปิดทันทีให้คนนั้นชนะ —
+        ปล่อยว่างไว้ถ้าอยากให้ประมูลไปเรื่อยๆ จนหมดเวลาเท่านั้น
+      </p>
+      <input
+        type="number"
+        id="sellBuyNowPrice"
+        placeholder="ไม่บังคับ เช่น 2000"
+        min="1"
+      />
+    </div>
+
+    <div class="field">
+      <label>ระยะเวลาประมูล</label>
+      <div class="select-row" id="sellDurationGrid"></div>
+      <p
+        id="sellDurationEditHint"
+        class="hidden"
+        style="font-size: 11.5px; color: var(--red); margin: 6px 0 0"
+      >
+        ✋ แก้ไขประกาศต้องเลือกระยะเวลาใหม่อีกครั้ง
+        (เวลาปิดประมูลจะเริ่มนับใหม่จากตอนนี้)
+      </p>
+    </div>
+
+    <div class="fee-note" id="sellFeeNote">
+      เลือกหมวดหมู่เพื่อดูค่าคอมมิชชั่นตัวอย่าง (ระบบนี้เป็นเดโม
+      ยังไม่หักเงินจริง)
+    </div>
+
+    <p
+      id="sellError"
+      style="
+        color: var(--red);
+        font-size: 12px;
+        display: none;
+        margin: -6px 0 14px;
+      "
+    ></p>
+    <button
+      class="btn btn-primary"
+      id="sellSubmitBtn"
+      onclick="submitListing()"
+    >
+      ลงประกาศ
+    </button>
+    <p style="font-size: 11px; color: var(--ink-soft); text-align: center">
+      การลงประกาศถือว่ายอมรับ<span
+        style="text-decoration: underline; cursor: pointer"
+        onclick="goTo('rules')"
+        >กฎการใช้งานและข้อห้าม</span
+      >
+    </p>
+  </div>

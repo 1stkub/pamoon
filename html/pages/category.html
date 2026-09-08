@@ -1,0 +1,29 @@
+  <!-- CATEGORY -->
+  <div class="screen hidden" id="screen-cat">
+    <p style="font-size: 15px; font-weight: 700; margin: 2px 0 12px">
+      หมวดหมู่
+    </p>
+    <div
+      class="profile-link"
+      onclick="
+        shopsReturnScreen = 'cat';
+        goTo('shops');
+      "
+      style="
+        border-color: var(--gold);
+        background: var(--gold-soft);
+        margin-bottom: 14px;
+      "
+    >
+      🏪 ค้นหา/เรียกดูร้านค้าทั้งหมด &rarr;
+    </div>
+
+    <p class="rule-section-title" style="margin-top: 0">🏪 ร้านค้าแนะนำ</p>
+    <div class="reco-shop-scroll" id="recoShopScroll"></div>
+
+    <p class="rule-section-title">✨ รายการแนะนำ</p>
+    <div class="reco-item-scroll" id="recoItemScroll"></div>
+
+    <p class="rule-section-title">เลือกดูตามหมวดหมู่</p>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>

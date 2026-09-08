@@ -1,0 +1,117 @@
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.reco-shop-scroll,
+.reco-item-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-bottom: 14px;
+  padding-bottom: 2px;
+}
+.reco-shop-card {
+  flex: none;
+  width: 96px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 6px;
+  text-align: center;
+  cursor: pointer;
+}
+.reco-shop-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  overflow: hidden;
+  font-size: 15px;
+}
+.reco-shop-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reco-shop-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.reco-shop-sub {
+  font-size: 10px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.reco-item-card {
+  flex: none;
+  width: 128px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.reco-item-thumb {
+  height: 88px;
+  background: linear-gradient(135deg, #ede9df, #ded7c4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  overflow: hidden;
+}
+.reco-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reco-item-body {
+  padding: 8px 9px;
+}
+.reco-item-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  margin: 0 0 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.reco-item-price {
+  font-size: 12.5px;
+  font-weight: 700;
+  margin: 0;
+}
+.reco-empty {
+  color: var(--ink-soft);
+  font-size: 12px;
+  margin: 0 0 14px;
+}
+.cat-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+}
+.cat-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+.cat-desc {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+

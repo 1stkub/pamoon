@@ -1,0 +1,98 @@
+/* shop rating summary + badges */
+.shop-stars {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  opacity: 0.95;
+}
+.shop-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.shop-pill {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+/* shop reviews list */
+.review-row {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.review-stars {
+  font-size: 13px;
+  color: var(--gold);
+  margin: 0 0 4px;
+}
+.review-item-name {
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+.review-text {
+  font-size: 12.5px;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.review-meta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* conversation list */
+.convo-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.convo-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ede9df, #ded7c4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.convo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.convo-body {
+  flex: 1;
+  min-width: 0;
+}
+.convo-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+.convo-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

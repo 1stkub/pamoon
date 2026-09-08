@@ -1,0 +1,72 @@
+  <!-- MINE / PROFILE -->
+  <div class="screen hidden" id="screen-mine">
+    <div class="info-row">
+      <div style="flex: 1">
+        <p
+          style="margin: 0; font-size: 13.5px; font-weight: 700"
+          id="mineNameLabel"
+        ></p>
+        <p style="margin: 2px 0 0; font-size: 11.5px; color: var(--ink-soft)">
+          ชื่อที่คนอื่นเห็นเมื่อคุณลงของ/บิด
+        </p>
+      </div>
+      <button
+        class="btn btn-outline"
+        style="
+          width: auto;
+          margin: 0;
+          padding: 8px 12px;
+          font-size: 12px;
+          flex-shrink: 0;
+        "
+        onclick="goTo('accountsettings')"
+      >
+        ⚙️ ตั้งค่าบัญชี
+      </button>
+    </div>
+
+    <div id="mineSellerSection" class="hidden">
+      <p class="rule-section-title" style="margin-top: 8px">ร้านค้าของฉัน</p>
+      <div id="mineShopCard"></div>
+      <div id="mineShopEditPanel" class="hidden"></div>
+    </div>
+    <div id="mineBuyerSection" class="hidden">
+      <p class="rule-section-title" style="margin-top: 8px">โปรไฟล์ผู้ประมูล</p>
+      <div id="mineProfileCard"></div>
+      <div id="mineProfileEditPanel" class="hidden"></div>
+    </div>
+
+    <p class="rule-section-title" style="margin-top: 8px">ประกาศของฉัน</p>
+    <div id="mineListings"></div>
+
+    <p class="rule-section-title">การประมูลที่ฉันร่วม</p>
+    <div id="mineBids"></div>
+
+    <div
+      class="profile-link hidden"
+      id="adminPanelLink"
+      onclick="goTo('admin')"
+      style="
+        margin-top: 16px;
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fff;
+      "
+    >
+      🛡️ แผงควบคุมแอดมิน &rarr;
+    </div>
+    <div
+      class="profile-link"
+      onclick="openFeedback()"
+      style="
+        margin-top: 16px;
+        border-color: var(--gold);
+        background: var(--gold-soft);
+      "
+    >
+      ให้ฟีดแบ็กเกี่ยวกับแอปนี้ (2 นาที) &rarr;
+    </div>
+    <div class="profile-link" onclick="goTo('rules')">
+      กฎการใช้งานและข้อห้าม &rarr;
+    </div>
+  </div>
